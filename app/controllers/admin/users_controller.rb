@@ -4,7 +4,7 @@ class Admin::UsersController < ApplicationController
 
   def index
     Rails.logger.debug "[Admin::UsersController#index] Params received: #{params.inspect}"
-    
+
     @users = User.all
 
     if params[:name].present?
@@ -36,7 +36,7 @@ class Admin::UsersController < ApplicationController
 
   def create
     Rails.logger.debug "[Admin::UsersController#create] Creating user with params: #{user_params.inspect}"
-    
+
     @user = User.new(user_params)
     if @user.save
       Rails.logger.debug "[Admin::UsersController#create] User created successfully: #{@user.inspect}"

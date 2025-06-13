@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # Devise routes (with custom registration controller)
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: "users/registrations"
   }
 
   # Dashboard (shared for all roles via DashboardController)
@@ -15,13 +15,13 @@ Rails.application.routes.draw do
 
   # Admin namespace for admin-only functionality
   namespace :admin do
-    resources :users, only: [:index, :new, :create]
-    resources :stores, only: [:index, :new, :create]
+    resources :users, only: [ :index, :new, :create ]
+    resources :stores, only: [ :index, :new, :create ]
   end
 
   # Store listing (used for normal users and admins)
-  resources :stores, only: [:index] do
-    resources :ratings, only: [:create] do
+  resources :stores, only: [ :index ] do
+    resources :ratings, only: [ :create ] do
       delete :clear, on: :collection
     end
   end

@@ -6,9 +6,9 @@ class User < ApplicationRecord
   validates :address, presence: true, length: { maximum: 400 }
   validates :role, presence: true, inclusion: { in: %w[normal_user store_owner admin] }
 
-  has_many :stores, dependent: :destroy       
-  has_many :ratings, dependent: :destroy      
-  
+  has_many :stores, dependent: :destroy
+  has_many :ratings, dependent: :destroy
+
   def admin?
     role == "admin"
   end
