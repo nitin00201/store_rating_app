@@ -1,0 +1,24 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-12">
+  <div class="max-w-xl w-full bg-white p-8 rounded-lg shadow-md text-center">
+    <h1 class="text-4xl font-extrabold text-blue-600 mb-6">Welcome to Store Rating App</h1>
+
+    <% if user_signed_in? %>
+      <div class="text-gray-700 text-lg space-y-4">
+        <p>
+          Logged in as:
+          <span class="font-semibold"><%= current_user.email %></span>
+          (<span class="capitalize"><%= current_user.role %></span>)
+        </p>
+        <div class="flex justify-center space-x-6">
+          <%= link_to 'Edit Profile', edit_user_registration_path, class: "text-blue-600 hover:underline font-medium" %>
+<%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo: false } %>
+        </div>
+      </div>
+    <% else %>
+      <div class="flex justify-center space-x-6 text-lg">
+        <%= link_to 'Sign Up', new_user_registration_path, class: "text-green-600 hover:underline font-medium" %>
+        <%= link_to 'Login', new_user_session_path, class: "text-blue-600 hover:underline font-medium" %>
+      </div>
+    <% end %>
+  </div>
+</div>

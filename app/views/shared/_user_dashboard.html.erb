@@ -1,0 +1,68 @@
+<h2 class="text-3xl font-bold text-green-700 mb-6">User Dashboard</h2>
+    <div class="mb-6">
+  <%= link_to "View All Stores", stores_path, class: "inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition" %>
+</div>
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @stores.each do |store| %>
+        <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
+          <div>
+            <h3 class="text-xl font-semibold mb-2"><%= store.name %></h3>
+            <p class="text-gray-600 mb-4">Average Rating:</p>
+            <div class="flex items-center mb-4">
+              <% average = store.average_rating.to_f.round %>
+              <% 5.times do |i| %>
+                <% if i < average %>
+                  <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.975a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.39 2.462a1 1 0 00-.364 1.118l1.286 3.974c.3.922-.755 1.688-1.54 1.118L10 13.347l-3.39 2.462c-.784.57-1.838-.196-1.54-1.118l1.286-3.974a1 1 0 00-.364-1.118L3.602 9.402c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.975z"/>
+                  </svg>
+                <% else %>
+                  <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.975a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.39 2.462a1 1 0 00-.364 1.118l1.286 3.974c.3.922-.755 1.688-1.54 1.118L10 13.347l-3.39 2.462c-.784.57-1.838-.196-1.54-1.118l1.286-3.974a1 1 0 00-.364-1.118L3.602 9.402c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.975z"/>
+                  </svg>
+                <% end %>
+              <% end %>
+              <span class="ml-2 text-gray-600 font-medium"><%= store.average_rating.round(1) %></span>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-gray-700 mb-2">Your Rating:</p>
+            <% user_rating = @user_ratings[store.id]&.value %>
+            <div class="flex items-center mb-4">
+              <% rating = user_rating || 0 %>
+              <% 5.times do |i| %>
+                <% if i < rating %>
+                  <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.975a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.39 2.462a1 1 0 00-.364 1.118l1.286 3.974c.3.922-.755 1.688-1.54 1.118L10 13.347l-3.39 2.462c-.784.57-1.838-.196-1.54-1.118l1.286-3.974a1 1 0 00-.364-1.118L3.602 9.402c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.975z"/>
+                  </svg>
+                <% else %>
+                  <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.975a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.39 2.462a1 1 0 00-.364 1.118l1.286 3.974c.3.922-.755 1.688-1.54 1.118L10 13.347l-3.39 2.462c-.784.57-1.838-.196-1.54-1.118l1.286-3.974a1 1 0 00-.364-1.118L3.602 9.402c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.975z"/>
+                  </svg>
+                <% end %>
+              <% end %>
+              <% if rating == 0 %>
+                <span class="ml-2 text-gray-400 italic">-</span>
+              <% end %>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <%= form_with url: store_ratings_path(store), method: :post, local: true, class: "flex space-x-2 items-center" do %>
+                <%= hidden_field_tag :store_id, store.id %>
+                <%= number_field_tag :value, nil, in: 1..5,
+                      class: "w-16 px-2 py-1 border rounded text-sm" %>
+                <%= submit_tag "Rate",
+                      class: "px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700" %>
+              <% end %>
+
+              <% if user_rating %>
+                <%= form_with url: clear_store_ratings_path(store), method: :delete, local: true do %>
+                  <%= hidden_field_tag :store_id, store.id %>
+                  <%= submit_tag "Clear Rating", class: "px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700" %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>

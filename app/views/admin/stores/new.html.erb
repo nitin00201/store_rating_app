@@ -1,0 +1,104 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-2xl mx-auto">
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <div class="mx-auto h-12 w-12 bg-blue-600 rounded-xl flex items-center justify-center mb-4">
+        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+        </svg>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Create New Store</h1>
+      <p class="text-gray-600">Add a new store to your platform</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white shadow-xl rounded-2xl border border-gray-100 overflow-hidden">
+      <div class="px-8 py-8">
+        <%= form_with model: @store, url: admin_stores_path, local: true, class: "space-y-6" do |f| %>
+          
+          <!-- Store Name Field -->
+          <div class="group">
+            <%= f.label :name, class: "block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-blue-600 transition-colors duration-200" %>
+            <div class="relative">
+              <%= f.text_field :name, required: true, 
+                  placeholder: "Enter store name", 
+                  class: "w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none bg-gray-50 focus:bg-white" %>
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                <svg class="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="group">
+            <%= f.label :email, class: "block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-blue-600 transition-colors duration-200" %>
+            <div class="relative">
+              <%= f.email_field :email, required: true, 
+                  placeholder: "store@example.com", 
+                  class: "w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none bg-gray-50 focus:bg-white" %>
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                <svg class="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address Field -->
+          <div class="group">
+            <%= f.label :address, class: "block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-blue-600 transition-colors duration-200" %>
+            <div class="relative">
+              <%= f.text_area :address, required: true, maxlength: 400, 
+                  placeholder: "Enter store address", 
+                  rows: 4,
+                  class: "w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none bg-gray-50 focus:bg-white resize-none" %>
+              <div class="absolute top-3 right-3">
+                <svg class="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </div>
+            </div>
+            <p class="mt-1 text-xs text-gray-500">Maximum 400 characters</p>
+          </div>
+
+          <!-- Store Owner Field -->
+          <div class="group">
+            <%= f.label :user_id, "Store Owner", class: "block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-blue-600 transition-colors duration-200" %>
+            <div class="relative">
+              <%= f.collection_select :user_id, User.where(role: 'store_owner'), :id, :name,
+                  { prompt: "Select Store Owner" }, 
+                  { class: "w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all duration-200 outline-none bg-gray-50 focus:bg-white appearance-none cursor-pointer" } %>
+              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-4">
+            <%= f.submit "Create Store", 
+                class: "w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500/50 active:scale-[0.98]" %>
+          </div>
+
+          <!-- Additional Actions -->
+          <div class="flex justify-center pt-4 border-t border-gray-100">
+            <%= link_to "Cancel", admin_stores_path, 
+                class: "text-gray-500 hover:text-gray-700 font-medium transition-colors duration-200" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Footer Note -->
+    <div class="text-center mt-8">
+      <p class="text-sm text-gray-500">
+        Fields marked with <span class="text-red-500">*</span> are required
+      </p>
+    </div>
+  </div>
+</div>

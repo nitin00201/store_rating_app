@@ -1,0 +1,38 @@
+<h2 class="text-2xl font-bold mb-4 text-blue-600">User Management</h2>
+
+<%= form_with url: admin_users_path, method: :get, local: true, class: "mb-4 space-y-2" do %>
+  <div class="flex gap-2 flex-wrap">
+    <%= text_field_tag :name, params[:name], placeholder: "Name", class: "px-3 py-2 border rounded" %>
+    <%= text_field_tag :email, params[:email], placeholder: "Email", class: "px-3 py-2 border rounded" %>
+    <%= text_field_tag :address, params[:address], placeholder: "Address", class: "px-3 py-2 border rounded" %>
+    <%= select_tag :role, options_for_select(["", "normal_user", "store_owner", "admin"], params[:role]), class: "px-3 py-2 border rounded" %>
+    <%= submit_tag "Filter", class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+  </div>
+<% end %>
+
+<table class="min-w-full table-auto border border-gray-300 mt-4">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="border px-4 py-2">Name</th>
+      <th class="border px-4 py-2">Email</th>
+      <th class="border px-4 py-2">Address</th>
+      <th class="border px-4 py-2">Role</th>
+      <th class="border px-4 py-2">Avg Store Rating (if Store Owner)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td class="border px-4 py-2"><%= user.name %></td>
+        <td class="border px-4 py-2"><%= user.email %></td>
+        <td class="border px-4 py-2"><%= user.address %></td>
+        <td class="border px-4 py-2"><%= user.role %></td>
+        <td class="border px-4 py-2">
+          <% if user.store_owner? && user.stores.any? %>
+            <%= user.stores.first.average_rating %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

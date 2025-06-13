@@ -1,0 +1,37 @@
+<h2 class="text-2xl font-bold text-blue-600 mb-4">Store Management</h2>
+<%= form_with url: admin_stores_path, method: :get, local: true, class: "mb-4" do %>
+  <div class="flex gap-2 flex-wrap">
+    <%= text_field_tag :name, params[:name], placeholder: "Name", class: "px-3 py-2 border rounded" %>
+    <%= text_field_tag :email, params[:email], placeholder: "Email", class: "px-3 py-2 border rounded" %>
+    <%= text_field_tag :address, params[:address], placeholder: "Address", class: "px-3 py-2 border rounded" %>
+
+    <%= select_tag :sort,
+        options_for_select([["Rating Ascending", "asc"], ["Rating Descending", "desc"]], params[:sort]),
+        class: "px-3 py-2 border rounded" %>
+
+    <%= submit_tag "Filter", class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+  </div>
+<% end %>
+
+
+
+<table class="min-w-full border border-gray-300">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="border px-4 py-2">Name</th>
+      <th class="border px-4 py-2">Email</th>
+      <th class="border px-4 py-2">Address</th>
+      <th class="border px-4 py-2">Avg Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stores.each do |store| %>
+      <tr>
+        <td class="border px-4 py-2"><%= store.name %></td>
+        <td class="border px-4 py-2"><%= store.email %></td>
+        <td class="border px-4 py-2"><%= store.address %></td>
+        <td class="border px-4 py-2"><%= store.average_rating %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

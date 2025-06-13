@@ -1,0 +1,80 @@
+<div class="max-w-2xl mx-auto py-12 px-6 bg-white shadow-md rounded-md">
+  <h2 class="text-3xl font-bold text-blue-600 mb-6">Edit <%= resource_name.to_s.humanize %></h2>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-6" }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <!-- Name Field -->
+    <div>
+      <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :name, maxlength: 60, minlength: 20, required: true,
+          class: "mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    </div>
+
+    <!-- Email Field -->
+    <div>
+      <%= f.label :email, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true,
+          class: "mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    </div>
+
+    <!-- Pending Confirmation -->
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div class="text-sm text-yellow-600">
+        Currently waiting confirmation for: <%= resource.unconfirmed_email %>
+      </div>
+    <% end %>
+
+    <!-- Address Field -->
+    <div>
+      <%= f.label :address, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_area :address, maxlength: 400, required: true,
+          class: "mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    </div>
+
+    <!-- Password Field -->
+    <div>
+      <%= f.label :password, class: "block text-sm font-medium text-gray-700" %>
+      <p class="text-xs text-gray-500 italic">Leave blank if you don't want to change it</p>
+      <%= f.password_field :password, autocomplete: "new-password",
+          class: "mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+      <% if @minimum_password_length %>
+        <p class="text-xs text-gray-500 mt-1">Password must be <%= @minimum_password_length %>–16 characters, include 1 uppercase and 1 special character.</p>
+      <% end %>
+    </div>
+
+    <!-- Password Confirmation Field -->
+    <div>
+      <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password",
+          class: "mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    </div>
+
+    <!-- Current Password Field -->
+    <div>
+      <%= f.label :current_password, class: "block text-sm font-medium text-gray-700" %>
+      <p class="text-xs text-gray-500 italic">Enter current password to confirm changes</p>
+      <%= f.password_field :current_password, autocomplete: "current-password", required: true,
+          class: "mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
+    </div>
+
+    <!-- Submit Button -->
+    <div>
+      <%= f.submit "Update", class: "w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
+    </div>
+  <% end %>
+
+  <!-- Cancel Account -->
+  <div class="mt-10">
+    <h3 class="text-lg font-semibold text-red-600 mb-2">Cancel my account</h3>
+    <p class="text-sm text-gray-600 mb-4">Unhappy? Deleting your account is permanent.</p>
+    <%= button_to "Cancel my account", registration_path(resource_name), method: :delete,
+        data: { confirm: "Are you sure you want to delete your account?", turbo_confirm: "Are you sure?" },
+        class: "text-red-600 hover:text-red-800 font-medium underline" %>
+  </div>
+
+  <!-- Back Link -->
+  <div class="mt-6">
+    <%= link_to "Back", root_path, class: "text-sm text-blue-600 hover:underline" %>
+  </div>
+</div>
